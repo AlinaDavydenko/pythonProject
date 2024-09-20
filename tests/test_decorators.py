@@ -1,9 +1,9 @@
-# import pytest
 import tempfile
 
 from src.decorators import log
 
 
+# 1 тест
 def test_log_good(capsys):
     """Тестирует выполнение декорированной функции"""
 
@@ -15,29 +15,36 @@ def test_log_good(capsys):
     assert result == 3
 
 
-# def test_log_exception_file_log(capsys):
-#     """Тестирует запись в файл после ошибки"""
-#     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-#         log_file_path = tmp_file.name
-#
-#     @log(filename=log_file_path)
-#     def func(x, y):
-#         return x + y
-#     func(1, "2")
-#     with open(log_file_path, 'r', encoding='utf-8') as file:
-#         logs = file.read()
-#     assert "my function error: unsupported operand type(s) for +: 'int' and 'str'. " in logs
+# 2 тест
+def test_log_exception_file(capsys):
+    """Тестирует запись в файл после ошибки"""
+    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+        log_file_path = tmp_file.name
+
+    @log(filename=log_file_path)
+    def func(x, y):
+        return x + y
+    func(1, 2)
+    with open(log_file_path, 'r', encoding='utf-8') as file:
+        logs = file.read()
+    assert "func ok" in logs
 
 
-# def test_log_exception_file(capsys):
-#     """Тестирует запись в файл после ошибки"""
-#     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-#         log_file_path = tmp_file.name
-#
-#     @log(filename=log_file_path)
-#     def func(x, y):
-#         return x + y
-#     func(1, 2)
-#     with open(log_file_path, 'r', encoding='utf-8') as file:
-#         logs = file.read()
-#     assert "my function start in 00:00:00 \nmy function is ok \nmy function stop in 00:00:00" in logs
+# 3 тест
+def test_log(capsys):
+    @log(filename='mylog.txt')
+    def my_function(x, y):
+        return x + y
+
+    # Проверка корректного выполнения функции
+    my_function(1, 2)
+    captured = capsys.readouterr()
+    assert (
+        "" in captured.out
+    )
+    # Проверка ошибки
+    try:
+        my_function(1, '2')
+    except TypeError:
+        captured = capsys.readouterr()
+        assert "my_function error: TypeError. Inputs: (1, '2'), {}" in captured.out

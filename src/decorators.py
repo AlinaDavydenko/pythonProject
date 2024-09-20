@@ -1,35 +1,31 @@
-from datetime import time
-
 from functools import wraps
 
 from typing import Any, Callable
 
 
-def log(filename: Any) -> Callable:  # создаём будущий декоратор логирования
-    """ запись вызова функции и её результат в файл или в консоль """
-    def timer(func):  # определяем функцию подсчёта времени исполнения функции
+def log(filename: Any) -> Callable:
+    """Decorator create log about function operation."""
+    def my_decorator(func):
         @wraps(func)
-        def wrapper(*args: Any, **kwargs: Any):
-            result = func(*args, **kwargs)
+        def wrapper(*args, **kwargs):
             try:
-                time_1 = time()
+                # time_1 = time()
                 result = func(*args, **kwargs)
-                time_2 = time()
+                # time_2 = time()
                 if filename:
-                    with open(filename, 'a', encoding='utf-8') as file:
-                        file.write(f'{func.__name__} start in {time_1} \nmy function is ok \nmy function stop in {time_2}')
+                    with open(filename, "w") as file:
+                        file.write(f"{func.__name__} ok")
                 else:
-                    print(f'{func.__name__} start in {time_1} \nmy function is ok \nmy function stop in {time_2}')
+                    print(f"{func.__name__} ok")
+                return result
             except Exception as e:
                 if filename:
-                    with open(filename, 'a', encoding='utf-8') as file:
-                        file.write(f'{func.__name__} error: {e}. Input: {args}, {kwargs}\n')
+                    with open(filename, "w") as file:
+                        file.write(f"{func.__name__} error: {e.__class__.__name__}. Inputs: {args}, {kwargs}")
                 else:
-                    print(f'{func.__name__} error: {e}. Input: {args}, {kwargs}\n')
-                    raise
-            return result
+                    print(f"{func.__name__} error: {e.__class__.__name__}. Inputs: {args}, {kwargs}")
         return wrapper
-    return timer
+    return my_decorator
 
 
 @log(filename='mylog.txt')
@@ -38,6 +34,4 @@ def my_function(x: int, y: int) -> int:
     return x+y
 
 
-# вызов функции
-my_func = my_function(x=5, y=2)
-print(my_func)
+my_function(3, '3')
