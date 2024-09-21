@@ -1,9 +1,9 @@
 from functools import wraps
 
-from typing import Any, Callable
+from typing import Any, Optional
 
 
-def log(filename: Any) -> Callable:
+def log(filename: Optional[str]) -> Any:
     """Decorator create log about function operation."""
     def my_decorator(func):
         @wraps(func)
@@ -24,6 +24,7 @@ def log(filename: Any) -> Callable:
                         file.write(f"{func.__name__} error: {e.__class__.__name__}. Inputs: {args}, {kwargs}")
                 else:
                     print(f"{func.__name__} error: {e.__class__.__name__}. Inputs: {args}, {kwargs}")
+                raise e
         return wrapper
     return my_decorator
 
@@ -34,4 +35,4 @@ def my_function(x: int, y: int) -> int:
     return x+y
 
 
-my_function(3, '3')
+my_function(3, 3)
