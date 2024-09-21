@@ -13,14 +13,14 @@ def log(filename: Optional[str]) -> Any:
                 result = func(*args, **kwargs)
                 # time_2 = time()
                 if filename:
-                    with open(filename, "w") as file:
+                    with open(filename, "a") as file:
                         file.write(f"{func.__name__} ok")
                 else:
                     print(f"{func.__name__} ok")
                 return result
             except Exception as e:
                 if filename:
-                    with open(filename, "w") as file:
+                    with open(filename, "a") as file:
                         file.write(f"{func.__name__} error: {e.__class__.__name__}. Inputs: {args}, {kwargs}")
                 else:
                     print(f"{func.__name__} error: {e.__class__.__name__}. Inputs: {args}, {kwargs}")
