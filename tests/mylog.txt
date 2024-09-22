@@ -1,1 +1,1 @@
-my_function error: TypeError. Inputs: (1, '2'), {}my_function okmy_function okmy_function error: TypeError. Inputs: (1, '2'), {}
+my_function error: TypeError. Inputs: (1, '2'), {}my_function okmy_function okmy_function error: TypeError. Inputs: (1, '2'), {}my_function okmy_function okmy_function error: TypeError. Inputs: (1, '2'), {}my_function okmy_function okmy_function error: TypeError. Inputs: (1, '2'), {}

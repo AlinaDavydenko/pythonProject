@@ -3,7 +3,7 @@ from functools import wraps
 from typing import Any, Optional
 
 
-def log(filename: Optional[str]) -> Any:
+def log(filename: Optional[str]) -> None:
     """Decorator create log about function operation."""
     def my_decorator(func):
         @wraps(func)
