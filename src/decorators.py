@@ -1,6 +1,6 @@
 from functools import wraps
 
-from typing import Any, Optional
+from typing import Optional
 
 
 def log(filename: Optional[str]) -> None:
