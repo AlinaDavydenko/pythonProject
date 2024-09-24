@@ -1,7 +1,9 @@
 import json
+import pprint
 
 
-def get_operations_data(path: str) -> None:
+# Обработка JSON-файла: функция чтения JSON-файла
+def get_operations_data(path: str) -> list[dict]:
     """ возвращает список словарей с данными о финансовых транзакциях """
     empty_list = []
     try:
@@ -10,33 +12,13 @@ def get_operations_data(path: str) -> None:
                 operation_data = json.load(f)
             except json.JSONDecodeError:
                 print('Ошибка декодирования файла')
-                raise empty_list
+                return empty_list
     except FileNotFoundError:
         print('Файл не найден')
-        raise empty_list
-
-    pass
-
-
-# with open(data/operations.json)
+        return empty_list
+    pprint.pp(operation_data)
+    return operation_data
 
 
 if __name__ == '__main__':
-    get_operations_data('operations.json')
-
-
-# -----> Обработка JSON-файла
-# функция чтения JSON-файла
-# Функция чтения JSON-файла принимает путь к файлу JSON в качестве аргумента
-# Функция чтения JSON-файла возвращает список словарей с данными о финансовых транзакциях
-# Если JSON-файл пустой, содержит не-список или не найден, возвращается пустой список
-
-# -----> Операции по конвертации валюты
-# функция конвертации валюты из USD и EUR в рубли
-# Функция конвертации валюты из USD и EUR в рубли принимает на вход словарь с данными о транзакции
-# Функция конвертации валюты из USD и EUR в рубли возвращает сумму транзакции (ключ amount) в рублях, тип данных float
-
-# Если транзакция была в USD или EUR, происходит обращение к внешнему API
-# для получения текущего курса валют и конвертации суммы операции в рубли
-
-#
+    get_operations_data('../data/operations.json')
