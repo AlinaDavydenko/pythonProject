@@ -3,7 +3,7 @@ import logging
 # Логирование
 # Настройки формата и хэндлера, добавление в логгер
 logger = logging.getLogger('get operation data')  # Получаем корневой логер с именем функции модуля
-file_handler = logging.FileHandler('logs/masks.log')  # Создаем хендлер для вывода в файл
+file_handler = logging.FileHandler('logs/masks.log', mode='w', encoding="utf-8")  # Создаем хендлер для вывода в файл
 file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')  # Настройка формата
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)  # Добавляем хэндллер с форматов в логгер
