@@ -34,5 +34,5 @@ def get_operations_data(path: str) -> list[dict]:
     return operation_data
 
 
-if __name__ == '__main__':
-    get_operations_data('../data/operations.json')
+# if __name__ == '__main__':
+#     get_operations_data('../data/operations.json')
